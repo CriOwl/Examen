@@ -58,7 +58,7 @@ public class MainFrame extends JFrame {
                     UIManager.setLookAndFeel(new FlatCyanLightIJTheme());
                 } else {
                     change_themes.setIcon(sun_theme_icon);
-                    UIManager.setLookAndFeel(new FlatMonokaiProIJTheme());
+                    UIManager.setLookAndFeel(new FlatCarbonIJTheme());
                 }
             } catch (Exception e) {
                 System.out.println("No se puede cargar el tema");
