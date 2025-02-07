@@ -47,7 +47,7 @@ public class TablaHormiga extends JPanel {
     private final Text_label ccBusquedaEtiqueta;
     private final HashMap<String,Integer> ccMapGenoma=new HashMap<>();
     private final HashMap<String,Integer> ccMapAlimento=new HashMap<>();
-    private final HashMap<String,Integer> ccTIpoHormiga=new HashMap<>();
+    private final HashMap<String,Integer> ccMapTIpoHormiga=new HashMap<>();
     private JTable ccTabla;
     private JScrollPane ccScroll;
     private String[] ccArrayGenoma;
@@ -216,7 +216,7 @@ public class TablaHormiga extends JPanel {
             List<CCHormigaTipoDTO> ccList=ccBlHormigaTipo.read_elments();
             ccArrayGenoma=new String [ccList.size()];
             for (int index = 0; index < ccList.size(); index++) {
-                ccTIpoHormiga.put(ccList.get(index).getName(), ccList.get(index).getIdTipoHormiga());
+                ccMapTIpoHormiga.put(ccList.get(index).getName(), ccList.get(index).getIdTipoHormiga());
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -263,8 +263,9 @@ public class TablaHormiga extends JPanel {
         int row=ccSelecionId();
             Hormiga hormiga=IngestaNativa.ccClasificar(ccIngesta.getSelectedItem().toString(), ccGenoma.getSelectedItem().toString(), row, ccTabla.getValueAt(row, 1).toString());
         try {
-                CCBlTable<CCHormigaDTO> bl_comer=new CCBlTable<>(CCHormigaDAO::new);
-                EcuAnt.show_mesg_correct("La hormiga a comido", "Crear Larvas");
+                CCBlTable<CCHormigaDTO> ccBlComer=new CCBlTable<>(CCHormigaDAO::new);
+                ccBlComer.update_elements(new CCHormigaDTO(hormiga.getId(),ccMapTIpoHormiga.get(hormiga.getTipo()),1,hormiga.getEstado(),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.getSelectedItem())));
+                EcuAnt.show_mesg_correct("La hormiga a comido", "Comer");
                 created_table();
         } catch (Exception e) {
         }   
