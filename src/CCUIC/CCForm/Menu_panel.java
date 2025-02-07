@@ -1,7 +1,7 @@
 package CCUIC.CCForm;
 
+import CCInfra.EcuAnt;
 import CCUIC.CCCustomerControl.Button_Text;
-import CCUIC.CCResource.EcuAnt;
 import java.awt.*;
 import javax.swing.*;
 

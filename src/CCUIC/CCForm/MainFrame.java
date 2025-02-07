@@ -1,5 +1,4 @@
 package CCUIC.CCForm;
-import CCUIC.CCResource.EcuAnt;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -10,6 +9,9 @@ import javax.swing.SwingUtilities;
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme;
+
+import CCInfra.EcuAnt;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -23,10 +25,13 @@ public class MainFrame extends JFrame {
     private  final ImageIcon sun_theme_icon = new ImageIcon(new ImageIcon(EcuAnt.URL_SUN_THEMES).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH));
     private  final ImageIcon logo = new ImageIcon(EcuAnt.URL_LOGO);
     private JFrame main_windown;
+    private Menu_panel menu;
+    private JPanel ccMainPanel;
     private boolean is_dark=true;
 
     public MainFrame(String name_app) {
         created_windown(name_app);
+        menu.boton.addActionListener(e->ccSetPanel(new TablaHormiga()));
     }
 
     public void created_windown(String name_app) {
@@ -68,22 +73,24 @@ public class MainFrame extends JFrame {
     }
     
     private void menu_panel(){
-        Menu_panel menu=new Menu_panel();
+        menu=new Menu_panel();
         Container container=getContentPane();
         container.setLayout(new BorderLayout());
         container.add(menu,BorderLayout.WEST);
-        TablaHormiga ta=new TablaHormiga();
+        ccMainPanel=new MainPanel();
         container.setPreferredSize(new Dimension(300,getHeight()));
-        container.add(ta);
-        main_windown.add(container);
-        main_windown.revalidate();
+        container.add(ccMainPanel);
         main_windown.add(container);
         main_windown.revalidate();
     }
-    private void change_panel_menu(JPanel panel){
-        main_windown.remove(panel);
-        main_windown.add(panel,BorderLayout.CENTER);
+    private void ccSetPanel(JPanel formularioPanel) {
+        Container container = getContentPane();
+        container.remove(ccMainPanel);
+        ccMainPanel = formularioPanel;
+        container.add(formularioPanel, BorderLayout.CENTER);
+        main_windown.add(container);
         main_windown.revalidate();
+        main_windown.repaint();
     }
 
     

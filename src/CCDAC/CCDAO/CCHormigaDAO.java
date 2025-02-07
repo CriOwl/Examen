@@ -1,18 +1,18 @@
 package CCDAC.CCDAO;
 
+import CCDAC.CCDTO.CCHormigaDTO;
+import CCDAC.CCDataHelperSqlite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import CCDAC.CCDataHelperSqlite;
-import CCDAC.CCDTO.CCHormigaDTO;
-
-public class CCHormigaDAO extends CCDataHelperSqlite {
+public class CCHormigaDAO extends CCDataHelperSqlite implements IDAO<CCHormigaDTO>{
 
     public CCHormigaDTO readby(Integer id) throws Exception {
         CCHormigaDTO registro = new CCHormigaDTO();
@@ -77,7 +77,7 @@ public class CCHormigaDAO extends CCDataHelperSqlite {
         }
         return tabla;
     }
-
+@Override
     public boolean created(CCHormigaDTO entity) {
         String query = " INSERT INTO CCHormiga (IdTipoHormiga, IdSexo)"
                 + " VALUES(?,?)";
@@ -93,6 +93,7 @@ public class CCHormigaDAO extends CCDataHelperSqlite {
         }
         return false;
     }
+@Override
     public boolean update(CCHormigaDTO entity) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -122,17 +123,69 @@ public class CCHormigaDAO extends CCDataHelperSqlite {
         }
         return false;
     }
-    public boolean delete(CCHormigaDTO entity) {
+@Override
+    public boolean delete(Integer id) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String query = "UPDATE CCHormiga SET "
                          + " Estado = ?       "
                          + " ,FechaActua = ?"
-                        +  " WHERE IdHormiga = "+entity.getIdHormiga();    
+                        +  " WHERE IdHormiga = "+id;    
         try {
             Connection conect = opConnection();
             PreparedStatement pstm = conect.prepareStatement(query);
             pstm.setString(1,"MUERTA");
+            pstm.setString(2, dtf.format(now).toString());
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    @Override
+    public List<CCHormigaDTO> ccReadBox(){
+        List<CCHormigaDTO> tabla = new ArrayList<>();
+        String query = " SELECT "
+                + " h.IdHormiga,    "
+                + " h.IdTipoHormiga,"
+                + " h.IdSexo,       "
+                + " h.Estado,       "
+                + " h.IdIngestaNativa,   "
+                + " h.IdGenoma,   "
+                + " h.Entrenada     "
+                + " FROM    CCHormiga ";
+        try {
+            Connection conect = opConnection();
+            Statement stm = conect.createStatement();
+            ResultSet rs = stm.executeQuery(query);
+            while (rs.next()) {
+                CCHormigaDTO registro = new CCHormigaDTO(
+                    rs.getInt(1), 
+                    rs.getInt(2), 
+                    rs.getInt(3), 
+                    rs.getString(4),
+                    rs.getInt(5), 
+                    rs.getInt(6), 
+                    rs.getString(7));
+                tabla.add(registro);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return tabla;
+    }
+    public boolean entrenar(Integer id) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String query = "UPDATE CCHormiga SET "
+                         + " Entrenada = ?       "
+                         + " ,FechaActua = ?"
+                        +  " WHERE IdHormiga = "+id;    
+        try {
+            Connection conect = opConnection();
+            PreparedStatement pstm = conect.prepareStatement(query);
+            pstm.setString(1,"SI");
             pstm.setString(2, dtf.format(now).toString());
             pstm.executeUpdate();
             return true;

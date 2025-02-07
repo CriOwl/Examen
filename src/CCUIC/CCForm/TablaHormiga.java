@@ -2,24 +2,31 @@ package CCUIC.CCForm;
 
 import CCBLC.CCBlTable;
 import CCBLC.CCBlView;
+import CCBLC.CCEntities.CCHLarva;
+import CCBLC.CCEntities.IngestaNativa;
 import CCDAC.CCDAO.CCGenomaDAO;
+import CCDAC.CCDAO.CCHormigaDAO;
 import CCDAC.CCDAO.CCHormigaTablaDAO;
 import CCDAC.CCDAO.CCIngestaDAO;
 import CCDAC.CCDTO.CCGenomaDTO;
+import CCDAC.CCDTO.CCHormigaDTO;
 import CCDAC.CCDTO.CCHormigaTablaDTO;
 import CCDAC.CCDTO.CCIngestaNativaDTO;
+import CCDAC.CCHormigueroDAC;
+import CCInfra.EcuAnt;
 import CCUIC.CCCustomerControl.Button_Text;
 import CCUIC.CCCustomerControl.Text_box;
 import CCUIC.CCCustomerControl.Text_label;
-import CCUIC.CCResource.EcuAnt;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,6 +39,7 @@ public class TablaHormiga extends JPanel {
     private final Button_Text ccBuscar;
     private final Button_Text ccEliminar;
     private final Button_Text ccGuardar;
+    private final Button_Text ccEntrenar;
     private JComboBox<String> ccGenoma;
     private JComboBox<String> ccIngesta;
     private final Text_box ccBusqueda;
@@ -50,11 +58,15 @@ public class TablaHormiga extends JPanel {
         ccEliminar = new Button_Text("Eliminar", EcuAnt.FONT_BOLD, null);
         ccGuardar = new Button_Text("Guardar", EcuAnt.FONT_BOLD, null);
         ccBuscar = new Button_Text("Buscar", EcuAnt.FONT_BOLD, null);
+        ccEntrenar = new Button_Text("Entrenar", EcuAnt.FONT_BOLD, null);
         ccBusqueda = new Text_box(EcuAnt.FONT_BOLD, null);
         ccBusquedaEtiqueta = new Text_label("Nombre:");
         ccGenoma=new JComboBox<>(ccData_Genoma());
         ccIngesta=new JComboBox<>(ccDataIngesta());
         ccBuscar.addActionListener(e -> change_table());
+        ccEliminar.addActionListener(e -> ccEliminar());
+        ccEntrenar.addActionListener(e -> ccEntrenar());
+        ccGuardar.addActionListener(e -> ccGuardar());
         created_table();
         setup_panel();
     }
@@ -127,15 +139,17 @@ public class TablaHormiga extends JPanel {
     private void setup_panel() {
         setLayout(new GridBagLayout());
         JTableHeader ccHeader = ccTabla.getTableHeader();
+        ccCrearLarva.addActionListener(e->ccCrear());
+        ccAlimentar.addActionListener(e->ccAlimentar());
         ccHeader.setFont(EcuAnt.FONT_BOLD);
         ccScroll.setPreferredSize(new Dimension(1000, 250));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 10, 5, 5);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridwidth = 4;
-        gbc.weightx = 3;
-        gbc.weighty = 3;
+        gbc.gridwidth = 5;
+        gbc.weightx = 4;
+        gbc.weighty = 4;
         gbc.fill = GridBagConstraints.BOTH;
         add(ccScroll, gbc);
         Dimension buttonSize = new Dimension(120, 30);
@@ -157,6 +171,8 @@ public class TablaHormiga extends JPanel {
         add(ccEliminar, gbc);
         gbc.gridx = 3;
         add(ccGuardar, gbc);
+        gbc.gridx = 4;
+        add(ccEntrenar,gbc);
         gbc.gridy = 2; 
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -174,6 +190,7 @@ public class TablaHormiga extends JPanel {
         gbc.gridx = 2;
         gbc.anchor = GridBagConstraints.EAST;
         add(ccBuscar, gbc);
+        addStatusBar();
     }
     private String[] ccData_Genoma(){
         try {
@@ -206,13 +223,92 @@ public class TablaHormiga extends JPanel {
         return ccArrayIngesta;
     }
 
-    private <ccName,ccId> ccName ccBuscarMap(Map<ccName,ccId> ccMap,ccId Id){
-    for (Map.Entry<ccName,ccId> entry : ccMap.entrySet()) {
-            if (entry.getValue().equals(Id)) {
-                System.out.println(entry.getKey());
-                return entry.getKey();
+    private void ccCrear(){
+        if(EcuAnt.show_mesg_yes_no("¿Está seguro de crear una Hormiga larva?","Confirmacion")==0){
+            try {
+                CCBlTable<CCHormigaDTO> bl_larva=new CCBlTable<>(CCHormigaDAO::new);
+                bl_larva.cretated_elements(new CCHormigaDTO(1,1));
+                EcuAnt.show_mesg_correct("HORMIGA LARVA,agregada al hormiguero", "Crear Larvas");
+                created_table();
+            } catch (Exception e) {
             }
         }
-        return null; 
     }
+    private Integer ccSelecionId(){
+        int selectedRow = ccTabla.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila primero");
+            return 0;
+        }
+        Integer id = (Integer) ccTabla.getValueAt(selectedRow, 0);
+        System.out.println(id);
+        return id;
+    }
+    private void ccAlimentar(){
+        int row=ccSelecionId();
+        if(ccTabla.getValueAt(row, 1).equals("HLarva")){
+            CCHLarva hormiga=new CCHLarva(row);
+            hormiga.comer(new IngestaNativa(ccMapGenoma.get(row),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.setSelectedItem(hormiga))));
+        }
+    }
+    private void ccGuardar(){
+        if(EcuAnt.show_mesg_yes_no("¿Está seguro de Guarda ?","Confirmacion")==0){
+            try {
+                StringBuilder data = new StringBuilder();
+                CCHormigueroDAC bl_hormiguero=new CCHormigueroDAC();
+                for (int row = 0; row < ccTabla.getRowCount(); row++) {
+                    for (int col = 0; col < ccTabla.getColumnCount(); col++) {
+                        data.append(ccTabla.getValueAt(row, col)); 
+                        if (col < ccTabla.getColumnCount() - 1) {
+                            data.append(", "); 
+                        }
+                    }
+                    data.append("\n");
+                }
+        
+                bl_hormiguero.naSaveHormigueroToCSV(data.toString());
+            } catch (Exception e) {
+            }
+        }
+    }
+    private void ccEliminar(){
+        if(EcuAnt.show_mesg_yes_no("¿Está seguro de eliminar una Hormiga larva?","Confirmacion")==0){
+            try {
+                CCBlTable<CCHormigaDTO> bl_larva=new CCBlTable<>(CCHormigaDAO::new);
+                bl_larva.delete(ccSelecionId());
+                EcuAnt.show_mesg_correct("HORMIGA Eliminada hormiguero", "Eliminar Hormigas");
+                created_table();
+            } catch (Exception e) {
+            }
+        }
+    }
+    private void ccEntrenar(){
+        try {
+            if(!(ccSelecionId()==0)){
+                new CCHormigaDAO().entrenar(ccSelecionId());
+                int row=ccSelecionId();
+                EcuAnt.show_mesg_correct(ccTabla.getValueAt(row, 1) +" entrenada y sumisa ", "Entrenar Hormigas");
+                created_table();
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    private void addStatusBar() {
+        JPanel statusBar = new JPanel(new GridLayout(1, 3));
+        Text_label ccMateria = new Text_label("Programacion II");
+        Text_label ccCedula = new Text_label("Cedula: 1751375963");
+        Text_label ccNombre = new Text_label("Nombre: Cristhian Carrillo");
+        statusBar.add(ccMateria);
+        statusBar.add(ccCedula);
+        statusBar.add(ccNombre);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(statusBar, gbc);
+    } 
+    
 }
+

@@ -1,6 +1,6 @@
 package CCUIC.CCCustomerControl;
 
-import CCUIC.CCResource.EcuAnt;
+import CCInfra.EcuAnt;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;

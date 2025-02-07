@@ -1,14 +1,13 @@
 package CCBLC.CCEntities;
 
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.IngestaNativa;
-
 public class CCHObrera extends Hormiga {
     public CCHObrera(int id) {
         super(id,"Obrera","Hembra","Viva");
     }
-    public CCHObrera(int id,String sexo,String estado) {
+    public CCHObrera(int id,String tipo,String sexo,String estado) {
         super(id,"Obrera","Hembra","Viva");
     }
+    
     @Override
     public Hormiga comer(IngestaNativa comida){
     switch (comida.getCcTipoIngesta()) {

@@ -1,8 +1,5 @@
 package CCBLC.CCEntities;
 
-import CCBLC.CCEntities.CCAlimentos.Alimento;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.IngestaNativa;
-
 public abstract class Hormiga implements IHormiga{
     private Integer Id;
     private String Tipo;
@@ -36,7 +33,7 @@ public abstract class Hormiga implements IHormiga{
         Estado = estado;
     }
     @Override
-    public Hormiga comer(IngestaNativa alimento){
-        
+    public String toString() {
+        return Id + "," + Tipo + "," + Sexo + "," + Estado;
     }
 }

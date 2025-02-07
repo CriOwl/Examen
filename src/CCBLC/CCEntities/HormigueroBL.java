@@ -1,26 +1,19 @@
-package BL;
+package CCBLC.CCEntities;
 
 import java.util.ArrayList;
 import CCBL.Entities.CCAlimento.CCGenoma.*;
 import CCBL.Entities.CCAlimento.CCIngesta.*;
-import CCBLC.CCEntities.CCAlimentos.CCGenoma.GenoAlimento;
-import CCBLC.CCEntities.CCAlimentos.CCGenoma.X;
-import CCBLC.CCEntities.CCAlimentos.CCGenoma.XX;
-import CCBLC.CCEntities.CCAlimentos.CCGenoma.XY;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.Carnivoro;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.Herbivoro;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.IngestaNativa;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.Insectivoro;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.Nectarivoro;
-import CCBLC.CCEntities.CCAlimentos.CCIngesta.Omnivoro;
-import DAC.HormigueroDAC;
-import Infra.AppException;  
+import CCBLC.CCEntities.CCAlimentos.*;
+import CCBLC.CCEntities.CCHLarva;
+import CCBLC.CCEntities.Hormiga;
+import DAC.CCHormigueroDAC;
+import CCInfra.AppException;  
 
 public class HormigueroBL {
     public ArrayList<Hormiga> lstHormiguero = new ArrayList<>();
 
     public String crearLarva() throws AppException {
-        Hormiga hormiga = new HLarva(lstHormiguero.size() + 1);
+        Hormiga hormiga = new CCHLarva(lstHormiguero.size() + 1);
         lstHormiguero.add(hormiga);
         return "HORMIGA LARVA, agregada al hormiguero";
     }
@@ -48,7 +41,7 @@ public class HormigueroBL {
 
     public String alimentarHormiga(int Idhormiga, String alimentoGeno, String alimentoNativo) throws AppException { 
         int indexList = -1;
-        GenoAlimento aGeno = null; 
+        CCGenoAlimento aGeno = null; 
         IngestaNativa aNativo = null; 
         Hormiga hormiga = null;
 
@@ -57,15 +50,13 @@ public class HormigueroBL {
             case "XY": aGeno = new XY(); break; 
             default: aGeno = new X(); break; 
         }
-
         switch (alimentoNativo) { 
-            case "Carnívoro": aNativo = new Carnivoro(); break;
+            case "Carnívoro": aNativo = new CCCarnivoro(); break;
             case "Herbívoro": aNativo = new Herbivoro(); break; 
             case "Omnívoro": aNativo = new Omnivoro(); break; 
             case "Insectívoro": aNativo = new Insectivoro(); break; 
             case "Nectarívoros": aNativo = new Nectarivoro(); break; 
         }
-
         for (int i = 0; i < lstHormiguero.size(); i++) {
             if (lstHormiguero.get(i).getId() == Idhormiga) { 
                 hormiga = lstHormiguero.get(i);
@@ -73,16 +64,15 @@ public class HormigueroBL {
                 break;
             }
         }
-
         if (aNativo == null || aGeno == null || hormiga == null || "MUERTA".equals(hormiga.getEstado())) {
             return "Ups...! alimento u hormiga no son válidos";
         }
-
-        if (aNativo.inyectar(aGeno)) {
+        if (aNativo.ccInyectar(aGeno)) {
             lstHormiguero.set(indexList, hormiga.comer(aNativo));
             return lstHormiguero.get(indexList).getTipo() + " Alimentada";
         } else {
             return hormiga.getTipo() + " NO alimentada";
         }
     }
+    
 }
