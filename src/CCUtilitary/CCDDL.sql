@@ -39,16 +39,7 @@ CREATE TABLE IF NOT EXISTS
         ,FechaCreacion  DATETIME DEFAULT (datetime('now', 'localtime'))
         ,FechaActua     DATETIME
     );
-/* CREATE TABLE IF NOT EXISTS
-    CCAlimento(
-        IdAlimento      INTEGER PRIMARY KEY AUTOINCREMENT
-        ,IdIngestaNativa INTEGER NOT NULL REFERENCES CCIngestaNativa (IdIngestaNativa)
-        ,IdGenoma       INTEGER REFERENCES CCGenoma(IdGenoma)
-        ,Estado         VARCHAR(10) NOT NULL DEFAULT ('A') CONSTRAINT Estado CHECK(Estado IN ('A','D'))
-        ,FechaCreacion  DATETIME DEFAULT (datetime('now', 'localtime'))
-        ,FechaActua     DATETIME
-    ); */
-    --aaaaaaaa
+
 CREATE TABLE IF NOT EXISTS
     CCTipoHormiga(
         IdTipoHormiga   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
@@ -57,7 +48,6 @@ CREATE TABLE IF NOT EXISTS
         ,FechaCreacion  DATETIME DEFAULT (datetime('now', 'localtime'))
         ,FechaActua     DATETIME
     );
-    --aaaaaaaaaaaaa
 CREATE TABLE IF NOT EXISTS
     CCEntomologo(
         IdEntomologo    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
@@ -66,7 +56,7 @@ CREATE TABLE IF NOT EXISTS
         ,FechaCreacion  DATETIME DEFAULT (datetime('now', 'localtime'))
         ,FechaActua     DATETIME
     );
-    -- aaaaaaaaaaaaaaaa
+
 CREATE TABLE IF NOT EXISTS
     CCHormigaEntrenada(
         IdHormigaEntrenada    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
@@ -105,7 +95,7 @@ INSERT INTO CCTipoHormiga  (Name) VALUES
 
 
 INSERT INTO CCIngestaNativa (Name) VALUES 
-('Nectarívoros'), ('Carnívoro'), ('Omnívoro'), ('Herbívoro'), ('Insectívoro');
+('Nectarivoros'), ('Carnivoro'), ('Omnivoro'), ('Herbivoro'), ('Insectívoro');
 
 INSERT INTO CCGenoma (Name) VALUES 
 ('X'), ('XX'), ('XY');
@@ -116,8 +106,3 @@ INSERT INTO CCHormiga (IdTipoHormiga, IdSexo) VALUES
 (2,1),
 (2,2),
 (2,3);
-
-SELECT 
-                        IdGenoma      
-                        ,Name         
-                        FROM CCGenoma WHERE Estado='A';

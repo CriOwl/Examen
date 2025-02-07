@@ -30,11 +30,11 @@ public abstract class EcuAnt {
     public static final Cursor CURSOR_HAND = new Cursor(Cursor.HAND_CURSOR);
     public static final Cursor CURSOR_DEFAULT = new Cursor(Cursor.DEFAULT_CURSOR);
 
-    public static final String URL_MAIN = ("src\\CCUIC\\CCResource\\Icon\\Logo_Spark_Math.png");
-    public static final String URL_LOGO = "src\\CCUIC\\CCResource\\Icon\\Logo_Spark_Math.png";
+    public static final String URL_MAIN = ("src\\CCUIC\\CCResource\\Icon\\LogAnt.png");
+    public static final String URL_LOGO = "src\\CCUIC\\CCResource\\Icon\\LogAnt.png";
     public static final String URL_SUN_THEMES = "src\\CCUIC\\CCResource\\Icon\\moon.png";
     public static final String URL_MOON_THEMES = "src\\CCUIC\\CCResource\\Icon\\sun.png";
-    public static final String URL_CHECK = "src\\UserInterface\\Resources\\Icon\\sun.png"; 
+    public static final String URL_CHECK = "src\\CCUIC\\CCResource\\Icon\\Check.png"; 
     public static final String DATAFILE = "Data\\hormiguero.csv";
     public static final String LOGFILE = "Data\\log.txt";
     

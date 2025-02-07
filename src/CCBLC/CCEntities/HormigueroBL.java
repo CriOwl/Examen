@@ -51,11 +51,11 @@ public class HormigueroBL {
             default: aGeno = new X(); break; 
         }
         switch (alimentoNativo) { 
-            case "Carnívoro": aNativo = new CCCarnivoro(); break;
-            case "Herbívoro": aNativo = new Herbivoro(); break; 
-            case "Omnívoro": aNativo = new Omnivoro(); break; 
-            case "Insectívoro": aNativo = new Insectivoro(); break; 
-            case "Nectarívoros": aNativo = new Nectarivoro(); break; 
+            case "Carnivoro": aNativo = new CCCarnivoro(); break;
+            case "Herbivoro": aNativo = new Herbivoro(); break; 
+            case "Omnivoro": aNativo = new Omnivoro(); break; 
+            case "Insectivoro": aNativo = new Insectivoro(); break; 
+            case "Nectarivoros": aNativo = new Nectarivoro(); break; 
         }
         for (int i = 0; i < lstHormiguero.size(); i++) {
             if (lstHormiguero.get(i).getId() == Idhormiga) { 

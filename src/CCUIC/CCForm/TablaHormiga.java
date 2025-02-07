@@ -2,22 +2,23 @@ package CCUIC.CCForm;
 
 import CCBLC.CCBlTable;
 import CCBLC.CCBlView;
-import CCBLC.CCEntities.CCHLarva;
+import CCBLC.CCEntities.Hormiga;
 import CCBLC.CCEntities.IngestaNativa;
 import CCDAC.CCDAO.CCGenomaDAO;
 import CCDAC.CCDAO.CCHormigaDAO;
 import CCDAC.CCDAO.CCHormigaTablaDAO;
 import CCDAC.CCDAO.CCIngestaDAO;
+import CCDAC.CCDAO.CCTipoHormigaDao;
 import CCDAC.CCDTO.CCGenomaDTO;
 import CCDAC.CCDTO.CCHormigaDTO;
 import CCDAC.CCDTO.CCHormigaTablaDTO;
+import CCDAC.CCDTO.CCHormigaTipoDTO;
 import CCDAC.CCDTO.CCIngestaNativaDTO;
 import CCDAC.CCHormigueroDAC;
 import CCInfra.EcuAnt;
 import CCUIC.CCCustomerControl.Button_Text;
 import CCUIC.CCCustomerControl.Text_box;
 import CCUIC.CCCustomerControl.Text_label;
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -46,6 +47,7 @@ public class TablaHormiga extends JPanel {
     private final Text_label ccBusquedaEtiqueta;
     private final HashMap<String,Integer> ccMapGenoma=new HashMap<>();
     private final HashMap<String,Integer> ccMapAlimento=new HashMap<>();
+    private final HashMap<String,Integer> ccTIpoHormiga=new HashMap<>();
     private JTable ccTabla;
     private JScrollPane ccScroll;
     private String[] ccArrayGenoma;
@@ -69,6 +71,7 @@ public class TablaHormiga extends JPanel {
         ccGuardar.addActionListener(e -> ccGuardar());
         created_table();
         setup_panel();
+        ccDataTipoHormiga();
     }
 
     private void change_table() {
@@ -207,6 +210,18 @@ public class TablaHormiga extends JPanel {
         }
         return ccArrayGenoma;
     }
+    private void ccDataTipoHormiga(){
+        try {
+            CCBlTable<CCHormigaTipoDTO> ccBlHormigaTipo=new CCBlTable<>(CCTipoHormigaDao::new);
+            List<CCHormigaTipoDTO> ccList=ccBlHormigaTipo.read_elments();
+            ccArrayGenoma=new String [ccList.size()];
+            for (int index = 0; index < ccList.size(); index++) {
+                ccTIpoHormiga.put(ccList.get(index).getName(), ccList.get(index).getIdTipoHormiga());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     private String[] ccDataIngesta(){
         try {
             CCBlTable<CCIngestaNativaDTO> ccBlGenoma=new CCBlTable<>(CCIngestaDAO::new);
@@ -246,11 +261,15 @@ public class TablaHormiga extends JPanel {
     }
     private void ccAlimentar(){
         int row=ccSelecionId();
-        if(ccTabla.getValueAt(row, 1).equals("HLarva")){
-            CCHLarva hormiga=new CCHLarva(row);
-            hormiga.comer(new IngestaNativa(ccMapGenoma.get(row),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.setSelectedItem(hormiga))));
-        }
+            Hormiga hormiga=IngestaNativa.ccClasificar(ccIngesta.getSelectedItem().toString(), ccGenoma.getSelectedItem().toString(), row, ccTabla.getValueAt(row, 1).toString());
+        try {
+                CCBlTable<CCHormigaDTO> bl_comer=new CCBlTable<>(CCHormigaDAO::new);
+                EcuAnt.show_mesg_correct("La hormiga a comido", "Crear Larvas");
+                created_table();
+        } catch (Exception e) {
+        }   
     }
+
     private void ccGuardar(){
         if(EcuAnt.show_mesg_yes_no("¿Está seguro de Guarda ?","Confirmacion")==0){
             try {
@@ -265,7 +284,6 @@ public class TablaHormiga extends JPanel {
                     }
                     data.append("\n");
                 }
-        
                 bl_hormiguero.naSaveHormigueroToCSV(data.toString());
             } catch (Exception e) {
             }
@@ -276,6 +294,9 @@ public class TablaHormiga extends JPanel {
             try {
                 CCBlTable<CCHormigaDTO> bl_larva=new CCBlTable<>(CCHormigaDAO::new);
                 bl_larva.delete(ccSelecionId());
+                if(ccSelecionId()==0){
+                    return;
+                }
                 EcuAnt.show_mesg_correct("HORMIGA Eliminada hormiguero", "Eliminar Hormigas");
                 created_table();
             } catch (Exception e) {
@@ -285,9 +306,8 @@ public class TablaHormiga extends JPanel {
     private void ccEntrenar(){
         try {
             if(!(ccSelecionId()==0)){
-                new CCHormigaDAO().entrenar(ccSelecionId());
-                int row=ccSelecionId();
-                EcuAnt.show_mesg_correct(ccTabla.getValueAt(row, 1) +" entrenada y sumisa ", "Entrenar Hormigas");
+                System.out.println(ccTabla.getValueAt(ccSelecionId(), 1).toString());
+                Hormiga.ccEntrenarHormiga(ccSelecionId(), ccTabla.getValueAt(ccSelecionId(), 1).toString());
                 created_table();
             }
         } catch (Exception e) {

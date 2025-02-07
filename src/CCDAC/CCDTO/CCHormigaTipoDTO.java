@@ -1,52 +1,48 @@
 package CCDAC.CCDTO;
 
-public class CCIngestaNativaDTO {
-    private Integer IdIngestaNativa ;
+public class CCHormigaTipoDTO {
+    private Integer IdTipoHormiga;
     private String Name           ;
     private String Estado         ;
     private String FechaCreacion  ;
     private String FechaActua     ;
     
 
-    public CCIngestaNativaDTO(Integer idIngestaNativa, String name) {
-        IdIngestaNativa = idIngestaNativa;
-        Name = name;
+   
+    public CCHormigaTipoDTO(Integer idTipoHormiga, String estado, String fechaActua) {
+        IdTipoHormiga = idTipoHormiga;
+        Estado = estado;
+        FechaActua = fechaActua;
     }
 
 
-    public CCIngestaNativaDTO() {
-    }
 
-
-    public CCIngestaNativaDTO(Integer idIngestaNativa, String name, String estado, String fechaActua) {
-        IdIngestaNativa = idIngestaNativa;
+    public CCHormigaTipoDTO(Integer idTipoHormiga, String name, String estado, String fechaActua) {
+        IdTipoHormiga = idTipoHormiga;
         Name = name;
         Estado = estado;
         FechaActua = fechaActua;
     }
 
 
-    public CCIngestaNativaDTO(Integer idIngestaNativa, String estado, String fechaActua) {
-        IdIngestaNativa = idIngestaNativa;
-        Estado = estado;
-        FechaActua = fechaActua;
-    }
 
-
-    public CCIngestaNativaDTO(String name, String estado) {
+    public CCHormigaTipoDTO(Integer idTipoHormiga, String name) {
+        IdTipoHormiga = idTipoHormiga;
         Name = name;
-        Estado = estado;
     }
 
 
-    public Integer getIdIngestaNativa() {
-        return IdIngestaNativa;
+
+    public Integer getIdTipoHormiga() {
+        return IdTipoHormiga;
     }
 
 
-    public void setIdIngestaNativa(Integer idIngestaNativa) {
-        IdIngestaNativa = idIngestaNativa;
+
+    public void setIdTipoHormiga(Integer idTipoHormiga) {
+        IdTipoHormiga = idTipoHormiga;
     }
+
 
 
     public String getName() {
@@ -54,9 +50,11 @@ public class CCIngestaNativaDTO {
     }
 
 
+
     public void setName(String name) {
         Name = name;
     }
+
 
 
     public String getEstado() {
@@ -64,9 +62,11 @@ public class CCIngestaNativaDTO {
     }
 
 
+
     public void setEstado(String estado) {
         Estado = estado;
     }
+
 
 
     public String getFechaCreacion() {
@@ -74,9 +74,11 @@ public class CCIngestaNativaDTO {
     }
 
 
+
     public void setFechaCreacion(String fechaCreacion) {
         FechaCreacion = fechaCreacion;
     }
+
 
 
     public String getFechaActua() {
@@ -84,15 +86,17 @@ public class CCIngestaNativaDTO {
     }
 
 
+
     public void setFechaActua(String fechaActua) {
         FechaActua = fechaActua;
     }
 
 
+
     @Override
     public String toString(){
         return getClass().getName()
-        +"\n IdIngestaNativa  : "    + getIdIngestaNativa()
+        +"\n IdTipoHormiga    : "    + getIdTipoHormiga()
         +"\n Name             : "    + getName()
         +"\n Estado           : "    + getEstado()
         +"\n FechaCreacion    : "    + getFechaCreacion()

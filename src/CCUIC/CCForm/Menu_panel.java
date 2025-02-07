@@ -13,7 +13,7 @@ public class Menu_panel extends JPanel {
     }
 
     private void init_component() {
-            boton = new Button_Text("Formulario", EcuAnt.FONT, EcuAnt.COLOR_FONT);
+            boton = new Button_Text("Formulario", EcuAnt.FONT, null);
 
     }
 

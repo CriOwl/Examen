@@ -1,7 +1,5 @@
 package CCDAC.CCDAO;
 
-import CCDAC.CCDTO.CCIngestaNativaDTO;
-import CCDAC.CCDataHelperSqlite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,9 +9,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CCIngestaDAO extends CCDataHelperSqlite implements IDAO<CCIngestaNativaDTO>{
+import CCDAC.CCDataHelperSqlite;
+import CCDAC.CCDTO.CCHormigaTipoDTO;
+
+public class CCTipoHormigaDao extends CCDataHelperSqlite implements IDAO<CCHormigaTipoDTO>{
     @Override
-    public boolean created(CCIngestaNativaDTO entity)throws Exception{
+    public boolean created(CCHormigaTipoDTO entity)throws Exception{
         try {
             String query="INSERT INTO CCIngestaNativa (Name,Estado) VALUES(?,?)";
             Connection cone = opConnection();
@@ -28,20 +29,20 @@ public class CCIngestaDAO extends CCDataHelperSqlite implements IDAO<CCIngestaNa
         return false;
     }
     @Override
-    public boolean update(CCIngestaNativaDTO entity)throws Exception{
+    public boolean update(CCHormigaTipoDTO entity)throws Exception{
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         try {
-            String query="UPDATE CCIngestaNativa SET"
+            String query="UPDATE CCTipoHormiga SET"
                         +",Name=?, "
                         +",Estado=?, "
-                        +",FechaActua=? WHERE IdIngestaNativa = ? ";
+                        +",FechaActua=? WHERE IdTipoHormiga = ? ";
             Connection cone = opConnection();
             PreparedStatement pst=cone.prepareStatement(query);
             pst.setString(1, entity.getName());
             pst.setString(2, entity.getEstado());
             pst.setString(3, dtf.format(now).toString());
-            pst.setInt(4, entity.getIdIngestaNativa());
+            pst.setInt(4, entity.getIdTipoHormiga());
             pst.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -54,9 +55,9 @@ public class CCIngestaDAO extends CCDataHelperSqlite implements IDAO<CCIngestaNa
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         try {
-            String query="UPDATE CCIngestaNativa SET "
+            String query="UPDATE CCTipoHormiga SET "
                         +"Estado=?, "
-                        +"FechaActua=? WHERE IdIngestaNativa = ? ";
+                        +"FechaActua=? WHERE IdTipoHormiga = ? ";
             Connection cone = opConnection();
             PreparedStatement pst=cone.prepareStatement(query);
             pst.setString(1, "D");
@@ -69,18 +70,18 @@ public class CCIngestaDAO extends CCDataHelperSqlite implements IDAO<CCIngestaNa
         }
         return false;
     }
-    public List<CCIngestaNativaDTO> ccReadBox(){
-        List<CCIngestaNativaDTO> ccTabla=new ArrayList<>();
+    public List<CCHormigaTipoDTO> ccReadBox(){
+        List<CCHormigaTipoDTO> ccTabla=new ArrayList<>();
         String ccQuery="SELECT "
-                        +"IdIngestaNativa "      
+                        +"IdTipoHormiga "      
                         +",Name "         
-                        +"FROM CCIngestaNativa WHERE Estado='A'";  
+                        +"FROM CCTipoHormiga WHERE Estado='A'";  
         try {
               Connection conec=opConnection();
               Statement stm=conec.createStatement();
               ResultSet rs=stm.executeQuery(ccQuery);
               while(rs.next()){
-                CCIngestaNativaDTO registro=new CCIngestaNativaDTO(
+                CCHormigaTipoDTO registro=new CCHormigaTipoDTO(
                                     rs.getInt(1),
                                     rs.getString(2));
                                     ccTabla.add(registro);
@@ -91,5 +92,4 @@ public class CCIngestaDAO extends CCDataHelperSqlite implements IDAO<CCIngestaNa
             }
         return ccTabla;
     }
-    
 }

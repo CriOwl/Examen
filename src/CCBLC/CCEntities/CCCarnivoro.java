@@ -1,8 +1,8 @@
 package CCBLC.CCEntities;
 
-public class CCCarnivoro extends CCIngestaNativa {
+public class CCCarnivoro extends IngestaNativa {
     public CCCarnivoro(){
         super("Carnivoro");
     }
-    
+
 }

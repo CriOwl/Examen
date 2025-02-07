@@ -1,13 +1,10 @@
 package CCUIC.CCForm;
 
+import CCInfra.EcuAnt;
 import java.awt.BorderLayout;
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import CCInfra.EcuAnt;
 
 public class MainPanel extends JPanel {
     public MainPanel() {

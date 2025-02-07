@@ -14,6 +14,16 @@ public class CCHormigaDTO {
     public CCHormigaDTO() {
     }
 
+    public CCHormigaDTO(Integer idHormiga, Integer idTipoHormiga, Integer idSexo, String estado,
+            Integer idIngestaNativa, Integer idGenoma) {
+        IdHormiga = idHormiga;
+        IdTipoHormiga = idTipoHormiga;
+        IdSexo = idSexo;
+        Estado = estado;
+        IdIngestaNativa = idIngestaNativa;
+        IdGenoma = idGenoma;
+    }
+
     public CCHormigaDTO(Integer idHormiga, String estado, String fechaActua) {
         IdHormiga = idHormiga;
         Estado = estado;
