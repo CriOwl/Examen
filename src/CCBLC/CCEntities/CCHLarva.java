@@ -2,7 +2,7 @@ package CCBLC.CCEntities;
 
 public class CCHLarva extends Hormiga {
     public CCHLarva(int id) {
-        super(id,"HLarva","Asexual","Viva");
+        super(id,"HLarva","Asexual","VIVA");
     }
     @Override
     public Hormiga comer(IngestaNativa comida){

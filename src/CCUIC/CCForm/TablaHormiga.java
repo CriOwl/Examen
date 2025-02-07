@@ -229,7 +229,7 @@ public class TablaHormiga extends JPanel {
             ccArrayIngesta=new String [ccList.size()];
             for (int index = 0; index < ccList.size(); index++) {
                 ccArrayIngesta[index]=ccList.get(index).getName();
-                ccMapGenoma.put(ccList.get(index).getName(), ccList.get(index).getIdIngestaNativa());
+                ccMapAlimento.put(ccList.get(index).getName(), ccList.get(index).getIdIngestaNativa());
             }
 
         } catch (Exception e) {
@@ -264,7 +264,7 @@ public class TablaHormiga extends JPanel {
             Hormiga hormiga=IngestaNativa.ccClasificar(ccIngesta.getSelectedItem().toString(), ccGenoma.getSelectedItem().toString(), row, ccTabla.getValueAt(row, 1).toString());
         try {
                 CCBlTable<CCHormigaDTO> ccBlComer=new CCBlTable<>(CCHormigaDAO::new);
-                ccBlComer.update_elements(new CCHormigaDTO(hormiga.getId(),ccMapTIpoHormiga.get(hormiga.getTipo()),1,hormiga.getEstado(),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.getSelectedItem())));
+               ccBlComer.update_elements(new CCHormigaDTO(hormiga.getId(),ccMapTIpoHormiga.get(hormiga.getTipo()),2,hormiga.getEstado(),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.getSelectedItem())));
                 EcuAnt.show_mesg_correct("La hormiga a comido", "Comer");
                 created_table();
         } catch (Exception e) {

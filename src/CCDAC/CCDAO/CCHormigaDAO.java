@@ -113,7 +113,7 @@ public class CCHormigaDAO extends CCDataHelperSqlite implements IDAO<CCHormigaDT
             pstm.setString(3, entity.getEstado());
             pstm.setInt(4, entity.getIdIngestaNativa());
             pstm.setInt(5, entity.getIdGenoma());
-            pstm.setString(7, dtf.format(now).toString());
+            pstm.setString(6, dtf.format(now).toString());
             pstm.executeUpdate();
             return true;
         } catch (Exception e) {

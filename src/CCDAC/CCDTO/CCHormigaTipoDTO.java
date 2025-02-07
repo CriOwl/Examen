@@ -91,8 +91,6 @@ public class CCHormigaTipoDTO {
         FechaActua = fechaActua;
     }
 
-
-
     @Override
     public String toString(){
         return getClass().getName()
