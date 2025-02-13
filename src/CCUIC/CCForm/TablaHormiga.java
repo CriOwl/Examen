@@ -43,8 +43,8 @@ public class TablaHormiga extends JPanel {
     private final Button_Text ccEliminar;
     private final Button_Text ccGuardar;
     private final Button_Text ccEntrenar;
-    private JComboBox<String> ccGenoma;
-    private JComboBox<String> ccIngesta;
+    private final JComboBox<String> ccGenoma;
+    private final JComboBox<String> ccIngesta;
     private final Text_box ccBusqueda;
     private final Text_label ccBusquedaEtiqueta;
     private final HashMap<String, Integer> ccMapGenoma = new HashMap<>();
@@ -210,6 +210,7 @@ public class TablaHormiga extends JPanel {
             for (int index = 0; index < ccList.size(); index++) {
                 ccArrayGenoma[index] = ccList.get(index).getName();
                 ccMapGenoma.put(ccList.get(index).getName(), ccList.get(index).getIdGenoma());
+                System.out.println(ccList.get(index).getName()+"/////"+ ccList.get(index).getIdGenoma());
             }
 
         } catch (Exception e) {
@@ -254,7 +255,7 @@ public class TablaHormiga extends JPanel {
             for (int index = 0; index < ccList.size(); index++) {
                 ccArrayIngesta[index] = ccList.get(index).getName();
                 ccMapAlimento.put(ccList.get(index).getName(), ccList.get(index).getIdIngestaNativa());
-            }
+            }   
 
         } catch (Exception e) {
             System.out.println(e);
@@ -291,8 +292,8 @@ public class TablaHormiga extends JPanel {
             if (!(ccTabla.getValueAt(row-1, 4).equals("MUERTA"))) {
                 Hormiga hormiga = IngestaNativa.ccClasificar(ccIngesta.getSelectedItem().toString(),
                         ccGenoma.getSelectedItem().toString(), row, ccTabla.getValueAt(row-1, 1).toString());
-                System.out.println(hormiga.getId()+"++++"+hormiga.getEstado()+"777"+hormiga.getTipo()+"+---"+hormiga.getSexo());
                 try {
+                    System.out.println(ccMapAlimento.get(ccIngesta.getSelectedItem())+"++++++"+ccMapGenoma.get(ccGenoma.getSelectedItem()));
                     CCBlTable<CCHormigaDTO> ccBlComer = new CCBlTable<>(CCHormigaDAO::new);
                     ccBlComer.update_elements(new CCHormigaDTO(hormiga.getId(), ccMapTIpoHormiga.get(hormiga.getTipo()),
                             ccMapSexo.get(hormiga.getSexo()), hormiga.getEstado(), ccMapAlimento.get(ccIngesta.getSelectedItem()),

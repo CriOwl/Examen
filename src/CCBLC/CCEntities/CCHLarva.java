@@ -11,7 +11,7 @@ public class CCHLarva extends Hormiga {
 
     @Override
     public Hormiga comer(IngestaNativa comida) {
-        System.out.println(comida);
+        System.out.println(comida.getCcGenoAlimento().getCcTipo());
         switch (comida.getCcTipoIngesta()) {
             case "HerbivoroXX":
                 return new CCHObrera(getId());
@@ -21,6 +21,14 @@ public class CCHLarva extends Hormiga {
                 return new CCHLarva(getId(), "HLarva", "ASEXUAL", "VIVA");
             case "NectarivoroXY":
                 return new CCHLarva(getId(), "HLarva", "ASEXUAL", "VIVA");
+            case "CarnivoroXY":
+                return new CCHSoldado(getId());
+            case "OmnivoroXY":
+                return new CCHZangano(getId());
+            case "HerbivoroXY":
+                return new CCHRastreadora(getId());
+            case "InsectivoroXX":
+                return new CCHReina(getId());
             default:
                 return new CCHLarva(getId(), "HLarva", "ASEXUAL", "MUERTA");
         }
