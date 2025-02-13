@@ -51,7 +51,7 @@ public class HormigueroBL {
             default: aGeno = new X(); break; 
         }
         switch (alimentoNativo) { 
-            case "Carnivoro": aNativo = new CCCarnivoro(); break;
+            case "Carnivoro": aNativo = new Carnivoro(); break;
             case "Herbivoro": aNativo = new Herbivoro(); break; 
             case "Omnivoro": aNativo = new Omnivoro(); break; 
             case "Insectivoro": aNativo = new Insectivoro(); break; 

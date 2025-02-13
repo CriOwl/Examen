@@ -49,14 +49,14 @@ public abstract class IngestaNativa extends CCAlimento implements ICCIngestaNati
             case "HObrera": hormiga=new CCHObrera(Id);break; 
             case "HLarva": hormiga=new CCHLarva(Id);break; 
             case "HSoldado": hormiga=new CCHSoldado(Id);break; 
-            default: EcuAnt.show_mesg_advert("El tipo de hormiga que desea alimentar no esta disponible", "TipoHormiga");break;
+            default: EcuAnt.show_mesg_advert("El tipo de hormiga que desea alimentar no esta disponible", "TipoAlimento");break;
         }
         switch (ccAlimento) { 
-            case "Carnivoro": aNativo = new CCCarnivoro(); break;
+            case "Carnivoro": aNativo = new Carnivoro(); break;
             case "Herbivoro": aNativo = new Herbivoro(); break; 
             case "Omnivoro": aNativo = new Omnivoro(); break; 
             case "Insectivoro": aNativo  = new Insectivoro(); break; 
-            case "Nectarivoros": aNativo  = new Nectarivoro(); break; 
+            case "Nectarivoro": aNativo  = new Nectarivoro(); break; 
         }
         aNativo.ccInyectar(aGeno);
         return hormiga.comer(aNativo);

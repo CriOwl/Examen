@@ -16,7 +16,7 @@ public class CCHObrera extends Hormiga {
     case "Omnivoro":
         break;
     case "HerbivoroXX":
-        return new CCHObrera(getId(),"HObrera","Hembra","MUERTA");
+        return new CCHObrera(getId(),"HObrera","Hembra","VIVA");
     case "Herbivoro":
         break;
     }

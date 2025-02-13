@@ -50,6 +50,5 @@ public abstract class Hormiga implements IHormiga{
             case "HSoldado": ccEntomologo.ccEducar(new CCHSoldado(Idhormiga));break; 
             default: EcuAnt.show_mesg_advert("El tipo de hormiga que desea entrenar no esta disponible", "TipoHormiga");break; 
         }
-        EcuAnt.show_mesg_advert("El tipo de hormiga que desea entrenar no esta disponible", "TipoHormiga");
     }
 }

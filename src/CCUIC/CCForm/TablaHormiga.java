@@ -261,14 +261,17 @@ public class TablaHormiga extends JPanel {
     }
     private void ccAlimentar(){
         int row=ccSelecionId();
+        if(!(row==0)){
             Hormiga hormiga=IngestaNativa.ccClasificar(ccIngesta.getSelectedItem().toString(), ccGenoma.getSelectedItem().toString(), row, ccTabla.getValueAt(row, 1).toString());
-        try {
-                CCBlTable<CCHormigaDTO> ccBlComer=new CCBlTable<>(CCHormigaDAO::new);
-               ccBlComer.update_elements(new CCHormigaDTO(hormiga.getId(),ccMapTIpoHormiga.get(hormiga.getTipo()),2,hormiga.getEstado(),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.getSelectedItem())));
-                EcuAnt.show_mesg_correct("La hormiga a comido", "Comer");
-                created_table();
-        } catch (Exception e) {
-        }   
+            try {
+                    CCBlTable<CCHormigaDTO> ccBlComer=new CCBlTable<>(CCHormigaDAO::new);
+                   ccBlComer.update_elements(new CCHormigaDTO(hormiga.getId(),ccMapTIpoHormiga.get(hormiga.getTipo()),3,hormiga.getEstado(),ccMapAlimento.get(ccIngesta.getSelectedItem()),ccMapGenoma.get(ccGenoma.getSelectedItem())));
+                    EcuAnt.show_mesg_correct("La hormiga a comido", "Comer");
+                    created_table();
+            } catch (Exception e) {
+                System.out.println(e);
+            }  
+        }
     }
 
     private void ccGuardar(){
@@ -304,14 +307,23 @@ public class TablaHormiga extends JPanel {
             }
         }
     }
-    private void ccEntrenar(){
+    private void ccEntrenar(){int id = ccSelecionId();
+        if (id == 0) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una hormiga para entrenar.");
+            return;
+        }
+        int selectedRow = ccTabla.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila primero.");
+            return;
+        }
         try {
-            if(!(ccSelecionId()==0)){
-                System.out.println(ccTabla.getValueAt(ccSelecionId(), 1).toString());
-                Hormiga.ccEntrenarHormiga(ccSelecionId(), ccTabla.getValueAt(ccSelecionId(), 1).toString());
-                created_table();
-            }
+            String tipoHormiga = ccTabla.getValueAt(selectedRow, 1).toString();
+            Hormiga.ccEntrenarHormiga((int)ccTabla.getValueAt(selectedRow, 0),tipoHormiga);
+            created_table(); 
         } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al entrenar la hormiga: " + e.getMessage());
         }
     }
     

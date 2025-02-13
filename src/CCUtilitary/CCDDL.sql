@@ -91,11 +91,11 @@ FROM CCHormiga h
     LEFT JOIN  CCGenoma g ON h.IdGenoma=g.IdGenoma;
 
 INSERT INTO CCTipoHormiga  (Name) VALUES 
-('HLarva'), ('HSoldado'), ('HZángano'), ('HRastreadora'), ('HReina'), ('HObrera');
+('HLarva'), ('HSoldado'), ('HZangano'), ('HRastreadora'), ('HReina'), ('HObrera');
 
 
 INSERT INTO CCIngestaNativa (Name) VALUES 
-('Nectarivoros'), ('Carnivoro'), ('Omnivoro'), ('Herbivoro'), ('Insectívoro');
+('Nectarivoro'), ('Carnivoro'), ('Omnivoro'), ('Herbivoro'), ('Insectívoro');
 
 INSERT INTO CCGenoma (Name) VALUES 
 ('X'), ('XX'), ('XY');
