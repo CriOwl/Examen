@@ -1,8 +1,5 @@
 package CCBLC.CCEntities;
 
-import CCBLC.CCEntities.CCAlimentos.CCAlimento;
-import CCBLC.CCEntities.CCAlimentos.CCGenoma.CCGenoAlimento;
-import CCInfra.AppException;
 import CCInfra.EcuAnt;
 
 public abstract class IngestaNativa extends CCAlimento implements ICCIngestaNativa{
@@ -46,9 +43,8 @@ public abstract class IngestaNativa extends CCAlimento implements ICCIngestaNati
             default: break; 
         }
         switch (Tipo) { 
-            case "HObrera": hormiga=new CCHObrera(Id);break; 
             case "HLarva": hormiga=new CCHLarva(Id);break; 
-            case "HSoldado": hormiga=new CCHSoldado(Id);break; 
+            case "HObrera": hormiga=new CCHObrera(Id);break; 
             default: EcuAnt.show_mesg_advert("El tipo de hormiga que desea alimentar no esta disponible", "TipoAlimento");break;
         }
         switch (ccAlimento) { 
@@ -58,9 +54,11 @@ public abstract class IngestaNativa extends CCAlimento implements ICCIngestaNati
             case "Insectivoro": aNativo  = new Insectivoro(); break; 
             case "Nectarivoro": aNativo  = new Nectarivoro(); break; 
         }
+        if (hormiga==null||aNativo==null) {
+            return hormiga;            
+        }
         aNativo.ccInyectar(aGeno);
         return hormiga.comer(aNativo);
-        
     }
     
 }

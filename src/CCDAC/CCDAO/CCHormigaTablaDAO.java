@@ -1,5 +1,7 @@
 package CCDAC.CCDAO;
 
+import CCDAC.CCDTO.CCHormigaTablaDTO;
+import CCDAC.CCDataHelperSqlite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,9 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import CCDAC.CCDataHelperSqlite;
-import CCDAC.CCDTO.CCHormigaTablaDTO;
 
 
 public class CCHormigaTablaDAO extends CCDataHelperSqlite implements IVIEWDAO<CCHormigaTablaDTO> {
@@ -29,7 +28,7 @@ public class CCHormigaTablaDAO extends CCDataHelperSqlite implements IVIEWDAO<CC
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
-                CCHormigaTablaDTO registro = new CCHormigaTablaDTO(
+                registro = new CCHormigaTablaDTO(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -40,7 +39,7 @@ public class CCHormigaTablaDAO extends CCDataHelperSqlite implements IVIEWDAO<CC
         } catch (SQLException e) {
             System.out.println("e");
         }
-        return institution;
+        return registro;
     }
 
     @Override

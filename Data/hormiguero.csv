@@ -1,14 +1,13 @@
-1, HSoldado, ASEXUAL,   , VIVA, SI
-2, HSoldado, MACHO,   , VIVA, NO
-3, HSoldado, HEMBRA,   , VIVA, NO
-4, HLarva, HEMBRA, Nectarivoro XX, VIVA, NO
-5, HLarva, HEMBRA, Nectarivoro XY, VIVA, NO
-6, HLarva, HEMBRA, Carnivoro XX, MUERTA, NO
-7, HObrera, HEMBRA, Herbivoro XX, MUERTA, NO
-8, HObrera, HEMBRA, Herbivoro XX, VIVA, NO
-9, HSoldado, HEMBRA, Carnivoro X, VIVA, NO
-10, HObrera, HEMBRA, Herbivoro XX, VIVA, NO
-11, HLarva, HEMBRA, Carnivoro XX, MUERTA, NO
-12, HObrera, HEMBRA, Herbivoro XX, VIVA, NO
-13, HLarva, ASEXUAL,   , VIVA, NO
+1, HObrera, HEMBRA, Omnivoro X, MUERTA, NO
+2, HObrera, HEMBRA, Omnivoro XY, MUERTA, NO
+3, HObrera, HEMBRA, Omnivoro XY, MUERTA, NO
+4, HObrera, HEMBRA, Herbivoro X, MUERTA, NO
+5, HObrera, HEMBRA, Nectarivoro X, MUERTA, NO
+6, HLarva, ASEXUAL,   , VIVA, NO
+7, HObrera, HEMBRA, Nectarivoro X, MUERTA, NO
+8, HObrera, HEMBRA, Nectarivoro X, MUERTA, NO
+9, HLarva, HEMBRA, Insectivoro X, MUERTA, NO
+10, HObrera, HEMBRA, Herbivoro X, MUERTA, NO
+11, HObrera, HEMBRA, Insectivoro XX, MUERTA, NO
+12, HLarva, ASEXUAL, Nectarivoro XY, VIVA, NO
 

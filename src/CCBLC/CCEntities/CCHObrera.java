@@ -2,24 +2,20 @@ package CCBLC.CCEntities;
 
 public class CCHObrera extends Hormiga {
     public CCHObrera(int id) {
-        super(id,"HObrera","Hembra","VIVA");
+        super(id,"HObrera","HEMBRA","VIVA");
     }
     public CCHObrera(int id,String tipo,String sexo,String estado) {
-        super(id,"HObrera","Hembra","VIVA");
+        super(id,"HObrera",sexo,estado);
     }
     
     @Override
     public Hormiga comer(IngestaNativa comida){
     switch (comida.getCcTipoIngesta()) {
-    case "OmnivoroXY":
-        return new CCHObrera(getId(),"HObrera","Hembra","MUERTA");
-    case "Omnivoro":
-        break;
     case "HerbivoroXX":
-        return new CCHObrera(getId(),"HObrera","Hembra","VIVA");
+        return new CCHObrera(getId(),"HObrera","HEMBRA","VIVA");
     case "Herbivoro":
-        break;
+        return new CCHObrera(getId(),"HObrera","HEMBRA","VIVA");
     }
-    return this;
+    return new CCHObrera(getId(),"HObrera","HEMBRA","MUERTA");
     }
 }

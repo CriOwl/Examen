@@ -12,11 +12,10 @@ public class CCHSoldado extends Hormiga {
     public Hormiga comer(IngestaNativa comida){
     switch (comida.getCcTipoIngesta()) {
     case "CarnivoroXY":
-        return new CCHObrera(getId(),"HSoldado","Hembra","VIVA");
+        return new CCHObrera(getId(),"HSoldado","MACHO","VIVA");
     case "Carnivoro":
-        return this;
-    default:
-        return new CCHObrera(getId(),"HSoldado","Hembra","MUERTA");
+        return new CCHObrera(getId(),"HSoldado","MACHO","VIVA");
     }
+    return new CCHObrera(getId(),"HSoldado","MACHO","MUERTA");
     }
 }

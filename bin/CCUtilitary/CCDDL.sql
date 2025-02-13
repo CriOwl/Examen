@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS
         IdHormiga       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
         ,IdTipoHormiga  INTEGER NOT NULL REFERENCES CCTipoHormiga(IdTipoHormiga) 
         ,IdSexo         INTEGER NOT NULL REFERENCES CCSexo(IdSexo)
-        ,Estado         VARCHAR(10) NOT NULL DEFAULT ('VIVA') CONSTRAINT Estado CHECK(Estado IN ('VIVA','MUERTA'))
+        ,Estado         VARCHAR(10) NOT NULL DEFAULT ('VIVA') 
         ,IdIngestaNativa INTEGER REFERENCES CCIngestaNativa (IdIngestaNativa)
         ,IdGenoma        INTEGER REFERENCES CCGenoma(IdGenoma)
         ,Entrenada      VARCHAR(2) NOT NULL DEFAULT ('NO') CONSTRAINT Entrenada CHECK(Entrenada IN ('SI','NO'))
@@ -95,7 +95,7 @@ INSERT INTO CCTipoHormiga  (Name) VALUES
 
 
 INSERT INTO CCIngestaNativa (Name) VALUES 
-('Nectarivoro'), ('Carnivoro'), ('Omnivoro'), ('Herbivoro'), ('Insectívoro');
+('Nectarivoro'), ('Carnivoro'), ('Omnivoro'), ('Herbivoro'), ('Insectivoro');
 
 INSERT INTO CCGenoma (Name) VALUES 
 ('X'), ('XX'), ('XY');
@@ -103,6 +103,6 @@ INSERT INTO  CCSexo (Name) VALUES
 ('ASEXUAL'), ('MACHO'), ('HEMBRA');
 
 INSERT INTO CCHormiga (IdTipoHormiga, IdSexo) VALUES
-(2,1),
-(2,2),
-(2,3);
+(1,1),
+(1,1),
+(1,1);
